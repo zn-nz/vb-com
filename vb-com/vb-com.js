@@ -11668,7 +11668,7 @@ const B2 = (e, t = "Y-m-d") => {
       o[l] = lr((o[l] || 0) + Number(r[l] || 0));
     });
   }), o;
-}, nC = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}, eC = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   dateTime2stamp: R2,
   downloadFile: Y2,
@@ -11695,18 +11695,18 @@ const B2 = (e, t = "Y-m-d") => {
   transformTozTreeFormat: F2,
   typeCheck: iu,
   uploadFile: su
-}, Symbol.toStringTag, { value: "Module" })), eC = [tu, ou, ru, lu], oC = {
+}, Symbol.toStringTag, { value: "Module" })), tC = [tu, ou, ru, lu], oC = {
+  utils: eC,
   VbTable: tu,
   VbButton: ou,
   VbListScrollSearch: ru,
   VbScrollSelect: lu,
   install(e) {
-    eC.forEach((t) => {
+    tC.forEach((t) => {
       e.component(t.name, t);
     });
   }
 };
 export {
-  oC as default,
-  nC as utils
+  oC as default
 };

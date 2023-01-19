@@ -3,18 +3,19 @@ import VbButton from "./vb-button/index.vue";
 import VbListScrollSearch from "./zn-list-scroll-search/index.vue";
 import VbScrollSelect from "./zn-scroll-select/index.v2.vue";
 import "element-plus/dist/index.css";
-export * as utils from "./utils/utils";
+import * as utils from "./utils/utils";
 
 const coms = [VbTable, VbButton, VbListScrollSearch, VbScrollSelect];
 
 export default {
+	utils,
 	VbTable,
 	VbButton,
 	VbListScrollSearch,
 	VbScrollSelect,
-	install(App) {
+	install(Vue) {
 		coms.forEach((com) => {
-			App.component(com.name, com);
+			Vue.component(com.name, com);
 		});
 	}
 };
