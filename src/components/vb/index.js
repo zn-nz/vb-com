@@ -3,12 +3,10 @@ import VbButton from "./vb-button/index.vue";
 import VbListScrollSearch from "./zn-list-scroll-search/index.vue";
 import VbScrollSelect from "./zn-scroll-select/index.v2.vue";
 import "element-plus/dist/index.css";
-import * as utils from "./utils/utils";
 
 const coms = [VbTable, VbButton, VbListScrollSearch, VbScrollSelect];
 
 export default {
-	utils,
 	VbTable,
 	VbButton,
 	VbListScrollSearch,
