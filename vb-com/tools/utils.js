@@ -17,10 +17,10 @@ export const formatFileNameSuffix = (str) => {
 // 格式化文件大小
 export const formatFileSize = (size) => {
 	switch (true) {
-	case size / 1024 < 1024:
-		return `${(size / 1024).toFixed(2)}kb`;
-	default:
-		return `${(size / 1024 / 1024).toFixed(2)}Mb`;
+		case size / 1024 < 1024:
+			return `${(size / 1024).toFixed(2)}kb`;
+		default:
+			return `${(size / 1024 / 1024).toFixed(2)}Mb`;
 	}
 };
 // 类型检测
@@ -38,20 +38,20 @@ export const sortFuc = (arr, keys, big2Small = false) => {
 	const keyArr = keys?.split(",");
 	function computeResult(av, bv) {
 		switch (true) {
-		case !!av?.match(REGCHINESENUM)?.length && !!bv?.match(REGCHINESENUM)?.length:
-			return chineseToNumber(av?.match(REGCHINESENUM)[0]) - chineseToNumber(bv?.match(REGCHINESENUM)[0]);
-		case isCH(av) && isCH(bv):
-			return -1;
-		case isCH(av) && !isCH(bv):
-			return -1;
-		case !isCH(av) && isCH(bv):
-			return 1;
-		default:
-			break;
+			case !!av?.match(REGCHINESENUM)?.length && !!bv?.match(REGCHINESENUM)?.length:
+				return chineseToNumber(av?.match(REGCHINESENUM)[0]) - chineseToNumber(bv?.match(REGCHINESENUM)[0]);
+			case isCH(av) && isCH(bv):
+				return -1;
+			case isCH(av) && !isCH(bv):
+				return -1;
+			case !isCH(av) && isCH(bv):
+				return 1;
+			default:
+				break;
 		}
 		let temp = 0;
 		if (av?.length !== bv?.length) {
-			temp += av.length - bv.length;
+			temp += av?.length - bv?.length || 0;
 		} else {
 			temp += av?.localeCompare(bv) + ((av - bv) * 2 || 0);
 		}
@@ -127,10 +127,10 @@ export const downloadFile = (
 export const formatNumber = (num, decimal = 2) => {
 	const type = typeCheck(num);
 	switch (type) {
-	case "[object Number]":
-		return Math.round(num * Math.pow(10, decimal)) / Math.pow(10, decimal);
-	default:
-		return num ?? 0;
+		case "[object Number]":
+			return Math.round(num * Math.pow(10, decimal)) / Math.pow(10, decimal);
+		default:
+			return num ?? 0;
 	}
 };
 
