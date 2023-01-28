@@ -1,259 +1,7 @@
 import chineseToNumber from "./chinese-number.js";
 import { REGCHINESENUM } from "./regs.js";
 import { isCH } from "./validate.js";
-/**
- * @Date: 2022-07-27 15:15:48
- * @description: 时间转时间戳
- * @return {*}
- */
-export const dateTime2stamp = (dateTime = "") => {
-	let _timeStamp = "";
-	if (dateTime !== "") {
-		const _dateTime = new Date(dateTime);
-		_timeStamp = _dateTime.getTime();
-	}
-	return _timeStamp;
-};
 
-/**
- * @Date: 2022-07-27 15:23:06
- * @param {*} format
- * @description: 获取format格式的时间
- * @return {*}
- */
-export const getDatetime = (format = "Y-m-d H:i:s") => {
-	let _datetime = "";
-	const _date = new Date();
-
-	const _year = _date.getFullYear().toString();
-	let _month = (_date.getMonth() + 1).toString();
-	let _day = _date.getDate().toString();
-	_month = _month < 10 ? `0${_month}` : _month;
-	_day = _day < 10 ? `0${_day}` : _day;
-
-	let _h = _date.getHours();
-	let _m = _date.getMinutes();
-	let _s = _date.getSeconds();
-	_h = _h < 10 ? `0${_h}` : _h;
-	_m = _m < 10 ? `0${_m}` : _m;
-	_s = _s < 10 ? `0${_s}` : _s;
-
-	switch (format) {
-	case "Y-M-d":
-		_datetime = `${_year}-${_month}-${_day}`;
-		break;
-	case "Y-M-d H:i:s":
-		_datetime = `${_year}-${_month}-${_day} ${_h}:${_m}:${_s}`;
-		break;
-	default:
-		_datetime = `${_year}-${_month}-${_day} ${_h}:${_m}:${_s}`;
-		break;
-	}
-
-	return _datetime;
-};
-
-export function parseTime(time, cFormat) {
-	if (arguments.length === 0 || !time) {
-		return null;
-	}
-	const format = cFormat || "{y}-{m}-{d} {h}:{i}:{s}";
-	let date;
-	if (typeof time === "object") {
-		date = time;
-	} else {
-		if (typeof time === "string") {
-			if (/^[0-9]+$/.test(time)) {
-				// support "1548221490638"
-				time = parseInt(time);
-			} else {
-				// support safari
-				// https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-				time = time.replace(new RegExp(/-/gm), "/");
-			}
-		}
-
-		if (typeof time === "number" && time.toString().length === 10) {
-			time = time * 1000;
-		}
-		date = new Date(time);
-	}
-	const formatObj = {
-		y: date.getFullYear(),
-		m: date.getMonth() + 1,
-		d: date.getDate(),
-		h: date.getHours(),
-		i: date.getMinutes(),
-		s: date.getSeconds(),
-		a: date.getDay()
-	};
-	const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
-		const value = formatObj[key];
-		// Note: getDay() returns 0 on Sunday
-		if (key === "a") {
-			return ["日", "一", "二", "三", "四", "五", "六"][value];
-		}
-		return value.toString().padStart(2, "0");
-	});
-	return time_str;
-}
-
-/**
- * @Date: 2022-07-27 15:18:18
- * @param {*} timestamp
- * @param {*} itype
- * @description: 时间戳转时间
- * @return {*}
- */
-export const timestampToTime = (timestamp, itype = "Y-m-d") => {
-	const date = new Date(timestamp); // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
-	const Y = `${date.getFullYear()}-`;
-	const M = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`;
-	const D = `${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}`;
-	// const D = date.getDate();
-
-	let h = date.getHours();
-	let m = date.getMinutes();
-	let s = date.getSeconds();
-
-	h = h < 10 ? `0${h}` : h;
-	m = m < 10 ? `0${m}` : m;
-	s = s < 10 ? `0${s}` : s;
-
-	let t = "";
-	if (itype === "Y-m-d") {
-		t = Y + M + D;
-	} else {
-		t = `${Y + M + D} ${h}:${m}:${s}`;
-	}
-	return t;
-};
-
-/**
- * @Date: 2022-08-04 13:55:13
- * @param {*} nodes
- * @description: 扁平化数组转换成tree节点数组
- * @return {*}
- */
-export const transformTozTreeFormat = (nodes) => {
-	let i;
-	let l;
-
-	if (!nodes) return [];
-
-	if (Object.prototype.toString.call(nodes) === "[object Array]") {
-		const r = [];
-		const tmpMap = {};
-		for (i = 0, l = nodes.length; i < l; i++) {
-			tmpMap[nodes[i].id] = nodes[i];
-		}
-		for (i = 0, l = nodes.length; i < l; i++) {
-			const p = tmpMap[nodes[i].parentId];
-			if (p && nodes[i].id !== nodes[i].parentId) {
-				if (!p.children) {
-					p.children = [];
-				}
-				p.children.push(nodes[i]);
-			} else {
-				r.push(nodes[i]);
-			}
-		}
-		return r;
-	} else {
-		return [nodes];
-	}
-};
-
-/**
- * @Date: 2022-11-13 16:33:13
- * @param {*} String
- * @description: 首字母大写
- * @return {*}
- */
-export const first2Upper = (str = "") => {
-	return str !== "" ? str.toLowerCase().replace(/( |^)[a-z]/g, (L) => L.toUpperCase()) : "";
-};
-
-export const getDictList = (code) => {
-	return new Promise((resolve, recject) => {
-		globalRequest(api.commons.dictItemByCode, { dictCode: code })
-			.then((res) => {
-				let resArr = [];
-				if (res.data.code === 1) {
-					res.data.data.forEach((item) => {
-						let obj = { name: item.name, code: item.code };
-						resArr.push(obj);
-					});
-				}
-				resolve(resArr);
-			})
-			.catch((e) => {
-				recject(e);
-			});
-	});
-};
-// 文件下载
-export const fileDown = (fileUrl = "") => {
-	//
-	var iFrame = document.createElement("iframe");
-	iFrame.src = fileUrl;
-	iFrame.style.display = "none";
-	document.body.appendChild(iFrame);
-	//
-};
-// pdf文件下载
-export const fileDownPdf = (fileUrl = "", fileName = "") => {
-	//
-	var link = document.createElement("a");
-	link.style.display = "none";
-	link.href = fileUrl;
-	link.target = "_blank";
-	link.download = fileName;
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
-	//
-};
-// 文件下载
-export const fileDownBlod = (data = null, fileName = "下载文件") => {
-	console.log("🚀 ~ file: utils.js ~ line 240 ~ fileDownBlod ~ data", data);
-	// let url = window.URL.createObjectURL(new Blob([data]));
-	let url = window.URL.createObjectURL(data);
-	let link = document.createElement("a");
-	//
-	link.style.display = "none";
-	link.href = url;
-	link.target = "_blank";
-	link.setAttribute("download", fileName); //指定下载后的文件名，防跳转
-	document.body.appendChild(link);
-	link.click();
-	window.URL.revokeObjectURL(link.href); // 释放URL 对象
-	document.body.removeChild(link);
-	//
-};
-export const obj2Formdata = (obj) => {
-	const formData = new FormData();
-	Object.keys(obj).forEach((key) => {
-		if (obj[key] !== null) {
-			formData.append(key, obj[key]);
-		}
-	});
-	return formData;
-};
-/**
- * 上传单个文件
- * @param {File} file
- * @returns 文件服务器地址 {name,path,url}
- */
-export const uploadFile = async (file) => {
-	const {
-		data: { data }
-	} = await globalRequest(api.commons.apiUpload, obj2Formdata({ file }));
-	if (data) {
-		return Promise.resolve(data);
-	}
-	return Promise.reject();
-};
 // 跳转外链
 export const jumpExternalChain = (path, blank = true) => {
 	const a = document.createElement("a");
@@ -349,15 +97,6 @@ export const selectLocalFile = (accept) => {
 	});
 };
 
-/**
- * 选择本地文件并上传
- * @param {fileType} accept
- * @returns {{name:string,url:string}}
- */
-export const selectAndUploadFile = async (accept) => {
-	const file = await selectLocalFile(accept);
-	return uploadFile(file);
-};
 // 下载文件
 export const downloadFile = (
 	blob,
@@ -378,9 +117,6 @@ export const downloadFile = (
 	a.remove();
 	window.URL.revokeObjectURL(objectUrl);
 };
-
-// 前端静态文件地址
-export const frontDocPath = (path) => `${import.meta.env.BASE_URL}${path}`;
 
 /**
  * js浮点数精度
@@ -462,9 +198,8 @@ export const getMoreSummaries = (param) => {
 	return sums;
 };
 
-// 合计
 /**
- *
+ * 合计
  * @param {数据} arr
  * @param {需要统计的key的数组} keys
  * @param {合计所在位置的key} summaryKey
