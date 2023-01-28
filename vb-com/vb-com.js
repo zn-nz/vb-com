@@ -11277,27 +11277,30 @@ const $2 = { class: "list-scroll-search" }, T2 = {
   },
   emits: ["loadMore"],
   setup(e, { emit: t }) {
-    const n = e;
-    let o;
+    const n = e, o = `cl-${Date.now()}-${Math.random().toString().replace(".", "")}`;
+    let r;
     xe(() => {
-      r();
+      l();
     }), Wo(() => {
-      o.removeEventListener("scroll", l);
+      r == null || r.removeEventListener("scroll", a);
     });
-    function r() {
-      o = document.querySelector(".scroll-select .el-scrollbar__wrap"), o.addEventListener("scroll", l);
+    function l() {
+      setTimeout(() => {
+        r = document.querySelector(`.${o} .el-scrollbar__wrap`), r == null || r.addEventListener("scroll", a);
+      }, 0);
     }
-    function l({ target: { offsetHeight: a, scrollHeight: s, scrollTop: i } }) {
-      a + i > s - n.diffBottom && !n.loading && t("loadMore");
+    function a({ target: { offsetHeight: s, scrollHeight: i, scrollTop: u } }) {
+      s + u > i - n.diffBottom && !n.loading && t("loadMore");
     }
-    return (a, s) => {
-      const i = Wi;
-      return T(), q(i, {
+    return (s, i) => {
+      const u = Wi;
+      return T(), q(u, {
         "model-value": e.value,
-        "popper-class": "scroll-select"
+        "popper-class": o,
+        onFocus: l
       }, {
         default: Y(() => [
-          re(a.$slots, "default")
+          re(s.$slots, "default")
         ]),
         _: 3
       }, 8, ["model-value"]);
