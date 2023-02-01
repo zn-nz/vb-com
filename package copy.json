@@ -1,6 +1,6 @@
 {
 	"name": "vb-com",
-	"version": "0.1.0",
+	"version": "0.1.8",
 	"description": "",
 	"main": "vb-com.js",
 	"scripts": {
@@ -8,7 +8,6 @@
 	},
 	"peerDependencies": {
 		"element-plus": "^2.2.28",
-		"sass": "^1.57.1",
 		"vue": "^3.2.45"
 	},
 	"dependencies": {

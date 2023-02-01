@@ -826,12 +826,13 @@ unplugin@^1.0.1:
     webpack-sources "^3.2.3"
     webpack-virtual-modules "^0.5.0"
 
-vb-com@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/vb-com/-/vb-com-0.1.6.tgz#117305d45ef3ee2183cb86c5813b23d0bbde2794"
-  integrity sha512-gLB4g2YdAA98ALCInOE3QF9bocyIF6wtGTwgS4tANp2I7yD+62AgR+hDu9t8RTO1x12cL+fly2jML4bVhS1HZA==
+vb-com@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/vb-com/-/vb-com-0.1.9.tgz#e02d740e4fc139cdaf319010d97200e21f93745f"
+  integrity sha512-77c5HP4N86lzAwo41WWB8iBCvDOV73oREAZcMxCW2pxajPMEcypYpPPT/gRsVgngFRFuMT3UUKUMykAi6/WRHA==
   dependencies:
     element-plus "^2.2.28"
+    vue "^3.2.45"
 
 vite@^4.0.0:
   version "4.0.4"
@@ -870,3 +871,8 @@ webpack-virtual-modules@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/webpack-virtual-modules/-/webpack-virtual-modules-0.5.0.tgz#362f14738a56dae107937ab98ea7062e8bdd3b6c"
   integrity sha512-kyDivFZ7ZM0BVOUteVbDFhlRt7Ah/CSPwJdi8hBpkK7QLumUqdLtVfm/PX/hkcnrvr0i77fO5+TjZ94Pe+C9iw==
+
+zy-plus@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/zy-plus/-/zy-plus-0.0.3.tgz#e14fea630309b21f61fcaa3635b2c3ace1c011dc"
+  integrity sha512-pwf+LWYrvWonH5cYKJN9oCXV0LMWXhwNQ0E0bzTRRi+9BuhEYit4f74tTJHjV5kOTLP8B59FEjqx3KX31zLlzg==

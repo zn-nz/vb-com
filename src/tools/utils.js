@@ -2,6 +2,16 @@ import chineseToNumber from "./chinese-number.js";
 import { REGCHINESENUM } from "./regs.js";
 import { isCH } from "./validate.js";
 
+// json转formdata
+export const obj2Formdata = (obj) => {
+	const formData = new FormData();
+	Object.keys(obj).forEach((key) => {
+		if (obj[key] !== null) {
+			formData.append(key, obj[key]);
+		}
+	});
+	return formData;
+};
 // 跳转外链
 export const jumpExternalChain = (path, blank = true) => {
 	const a = document.createElement("a");

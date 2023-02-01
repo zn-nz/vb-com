@@ -10,7 +10,7 @@ export default defineConfig({
 		outDir: "vb-com",
 		// outDir: "vb",
 		lib: {
-			entry: path.resolve(__dirname, "./src/components/vb/index.js"),
+			entry: path.resolve(__dirname, "./lib/index.js"),
 			name: "vb-com",
 			fileName: "vb-com"
 		},
@@ -29,7 +29,9 @@ export default defineConfig({
 			resolvers: [ElementPlusResolver()]
 		}),
 		Components({
-			resolvers: [ElementPlusResolver()]
+			resolvers: [ElementPlusResolver({
+				importStyle: 'sass'
+			})]
 		})
 	]
 });
