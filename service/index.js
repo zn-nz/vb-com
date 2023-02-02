@@ -29,11 +29,11 @@ router.get("/ees", function (ctx, next) {
 		"Cache-Control": "no-cache",
 		Connection: "keep-alive"
 	});
-	sse(stream, "test", { a: "yango", b: "tango" });
+	sse(stream, '', '首条消息');
 	ctx.body = stream;
 	setInterval(() => {
 		sse(stream, "test", { a: "yango", b: Date.now() });
-	}, 3000);
+	}, 1000 * 10);
 });
 
 app.use(router.routes());

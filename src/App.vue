@@ -17,14 +17,15 @@ function initEES() {
 	source.onopen = (data) => {
 		logger("%cSSE连接成功%chttp://localhost:3000!");
 	};
-	source.onmessage = (data) => {
-		console.log(data);
+	source.onmessage = (event) => {
+		logger("%c收到消息", JSON.parse(event.data));
 	};
 	source.onerror = (err) => {
-		console.log(err);
-	}; // 监听指定类型的事件（可以监听多个）
-	source.addEventListener("test", function (event) {
-		logger("%ctest", JSON.parse(event.data));
+		logger("%c%c断开链接");
+	};
+	// 监听指定类型的事件（可以监听多个）
+	source.addEventListener("test", (event) => {
+		logger("%c收到消息", JSON.parse(event.data));
 	});
 }
 initEES();
