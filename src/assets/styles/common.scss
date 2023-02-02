@@ -152,30 +152,30 @@
 	}
 }
 
-@mixin antd-item-label-width($width: 90) {
-	width: $width + px;
-}
+// @mixin antd-item-label-width($width: 90) {
+// 	width: $width + px;
+// }
 
-// form表单label宽度
-.ant-form {
-	@for $width from 60 to 200 {
-		&.label-width-#{$width} {
-			.ant-form-item-label {
-				@include antd-item-label-width($width);
-			}
-		}
-	}
+// // form表单label宽度
+// .ant-form {
+// 	@for $width from 60 to 200 {
+// 		&.label-width-#{$width} {
+// 			.ant-form-item-label {
+// 				@include antd-item-label-width($width);
+// 			}
+// 		}
+// 	}
 
-	.ant-form-item {
-		@for $width from 10 to 200 {
-			&.label-width-#{$width} {
-				.ant-form-item-label {
-					@include antd-item-label-width($width);
-				}
-			}
-		}
-	}
-}
+// 	.ant-form-item {
+// 		@for $width from 10 to 200 {
+// 			&.label-width-#{$width} {
+// 				.ant-form-item-label {
+// 					@include antd-item-label-width($width);
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 
 .disabled {
 	cursor: not-allowed;
@@ -199,7 +199,7 @@
 .nowrap {
 	white-space: nowrap;
 }
-.yb-drawer {
+.el-drawer {
 	.filter-container {
 		&::after {
 			content: unset;
