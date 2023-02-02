@@ -10,6 +10,21 @@
 </template>
 <script setup>
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
-import { ref } from "vue";
-const value = ref([{ i: "i" }]);
+
+function initEES() {
+	const source = new EventSource("/ees");
+	source.onopen = (data) => {
+		console.log("%cSSE连接成功%chttp://localhost:3000!", "background:black;padding:4px 10px;color:#eace6c","background:#fadfa3;padding:4px 10px;color:#333")
+	};
+	source.onmessage = (data) => {
+		console.log(data);
+	};
+	source.onerror = (err) => {
+		console.log(err);
+	}; // 监听指定类型的事件（可以监听多个）
+	source.addEventListener("test", function (event) {
+		console.log("test", JSON.parse(event.data));
+	});
+}
+initEES();
 </script>

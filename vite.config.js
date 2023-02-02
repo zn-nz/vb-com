@@ -29,9 +29,20 @@ export default defineConfig({
 			resolvers: [ElementPlusResolver()]
 		}),
 		Components({
-			resolvers: [ElementPlusResolver({
-				importStyle: 'sass'
-			})]
+			resolvers: [
+				ElementPlusResolver({
+					importStyle: "sass"
+				})
+			]
 		})
-	]
+	],
+	server: {
+		host: true,
+		proxy: {
+			"/ees": {
+				target: "http://localhost:3000",
+				changeOrigin: true
+			}
+		}
+	}
 });
