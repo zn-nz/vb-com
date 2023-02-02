@@ -1,6 +1,6 @@
 {
 	"name": "vb-com",
-	"version": "0.1.9",
+	"version": "0.1.13",
 	"description": "",
 	"main": "vb-com.umd.cjs",
   "module": "vb-com.js",

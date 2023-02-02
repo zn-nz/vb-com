@@ -26,7 +26,7 @@ import ScrollSelect from "./index.vue";
 import { computed, onMounted, ref, watch } from "vue";
 
 const props = defineProps({
-	api: Object,
+	api: () => Promise,
 	searchKey: { type: String, default: "name" }, // 检索键值
 	formatDataFc: Function, // 格式化数据的方法
 	defaultParams: {
@@ -99,7 +99,7 @@ async function getListData() {
 		...listQuery.value,
 		[props.searchKey]: keyword.value
 	};
-	const { data: res } = await globalRequest(props.api, query);
+	const { data: res } = await props.api(query);
 	loading.value = false;
 	const { ok, data } = res ?? {};
 	if (ok) {

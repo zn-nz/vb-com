@@ -22,7 +22,7 @@ import { onMounted, ref } from "vue";
 import { Search, Loading } from "@element-plus/icons-vue";
 
 const props = defineProps({
-	api: Object,
+	api: () => Promise,
 	searchKey: String,
 	placeholder: String,
 	formatDataFc: Function,
@@ -60,7 +60,7 @@ async function getListData() {
 		...listQuery.value,
 		[searchKey]: keyword.value
 	};
-	const { data: res } = await globalRequest(api, query);
+	const { data: res } = await api(query);
 	loading.value = false;
 	const { ok, data } = res ?? {};
 	if (ok && data?.length) {

@@ -1,1 +1,1 @@
-export * from "./tableMixin";
+export { default as tableMixin } from "./tableMixin";
