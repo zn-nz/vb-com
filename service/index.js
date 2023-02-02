@@ -25,7 +25,7 @@ const sse = (stream, event, data) => {
 router.get("/ees", function (ctx, next) {
 	var stream = new RR(); //PassThrough();
 	ctx.set({
-		"Content-Type": "text/event-stream",
+		"Content-Type": "text/event-stream;charset=utf-8",
 		"Cache-Control": "no-cache",
 		Connection: "keep-alive"
 	});
