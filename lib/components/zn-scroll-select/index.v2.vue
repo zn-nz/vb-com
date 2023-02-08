@@ -11,9 +11,11 @@
 		remote
 		reserve-keyword
 		remote-show-suffix
+		:allowCreate="allowCreate"
 		:remote-method="handleSearch"
 		@loadMore="loadMore"
-		@clear="initData"
+		@clear="handleClear"
+		@visible-change="visibleChange"
 		@change="handleChange"
 		:value-key="option.key"
 	>
@@ -26,14 +28,16 @@ import ScrollSelect from "./index.vue";
 import { computed, onMounted, ref, watch } from "vue";
 
 const props = defineProps({
-	api: () => Promise,
-	searchKey: { type: String, default: "name" }, // 检索键值
+	api: Object,
+	searchKey: {
+		// 检索键值
+		type: String,
+		default: "name"
+	},
 	formatDataFc: Function, // 格式化数据的方法
-	defaultParams: {
-		type: Object,
-		default: () => ({})
-	}, // 默认参数
+	defaultParams: Object, // 默认参数
 	modelValue: [String, Array],
+	allowCreate: Boolean,
 	init: {
 		// 是否初始化第一页数据
 		type: Boolean,
@@ -60,6 +64,9 @@ const value = computed(() => {
 		const find = listData.value.find((item) => {
 			return item[props.option.key] === props.modelValue;
 		});
+		if (!find && props.allowCreate) {
+			return props.modelValue;
+		}
 		return find;
 	}
 });
@@ -79,16 +86,18 @@ onMounted(() => {
 });
 watch(
 	() => JSON.stringify(props.defaultParams),
-	(val) => {
+	() => {
 		reset();
 	}
 );
 function reset() {
 	listData.value = [];
 	cacheListData = [];
+	keyword.value = undefined;
 	listQuery.value.pageIndex = 1;
 	getListData();
 }
+const { option, api, searchKey, formatDataFc, allowCreate } = props;
 async function getListData() {
 	if (!props.api) {
 		throw "scroll-select-v2 组件 未定义api";
@@ -97,28 +106,32 @@ async function getListData() {
 	const query = {
 		...props.defaultParams,
 		...listQuery.value,
-		[props.searchKey]: keyword.value
+		[searchKey]: keyword.value
 	};
-	const { data: res } = await props.api(query);
+	const { data: res } = await globalRequest(api, query);
 	loading.value = false;
 	const { ok, data } = res ?? {};
 	if (ok) {
-		let temp = data?.filter((i) => listData.value.every((j) => j[props.option.key] !== i[props.option.key])) || [];
-		props.formatDataFc && (temp = props.formatDataFc(temp));
-		if (data?.length < listQuery.value.pageSize) {
-			noMore = true;
-		}
+		let temp = data?.filter((i) => listData.value.every((j) => j[option.key] !== i[option.key])) || [];
+		formatDataFc && (temp = formatDataFc(temp));
+		noMore = data?.length < listQuery.value.pageSize;
 		if (keyword.value) {
 			listData.value = temp;
 		} else {
-			cacheListData.push(...temp);
+			temp?.length && cacheListData.push(...temp);
 			initData();
+			noMore = data?.length < listQuery.value.pageSize;
 			if (props.modelValue) {
-				const find = cacheListData.find((item) => item[props.option.key] === props.modelValue);
-				if (find) {
-					handleChange(find);
+				if (isArray(props.modelValue)) {
+					const _value = cacheListData.filter((item) => props.modelValue.includes(item[props.option.key]));
+					handleChange(_value);
 				} else {
-					loadMore();
+					const find = cacheListData.find((item) => item[option.key] === props.modelValue);
+					if (find) {
+						handleChange(find);
+					} else {
+						loadMore();
+					}
 				}
 			}
 			if (!props.modelValue && props.defaultFirst) {
@@ -128,7 +141,7 @@ async function getListData() {
 	} else {
 		noMore = true;
 	}
-	if (!listData.value.length) {
+	if (!allowCreate && !listData.value.length) {
 		handleChange(undefined);
 	}
 }
@@ -139,34 +152,37 @@ function loadMore() {
 	}
 }
 function handleSearch(value) {
-	keyword.value = value;
 	if (value) {
+		keyword.value = value;
 		listQuery.value.pageIndex = 1;
 		listData.value = [];
 		getListData();
-	} else {
+	}
+}
+function visibleChange(show) {
+	if (show && !props.modelValue) {
 		initData();
 	}
 }
-
+function handleClear() {
+	keyword.value = undefined;
+	listQuery.value.pageIndex = 1;
+	initData();
+}
 function initData() {
 	listData.value = [...cacheListData];
+	noMore = false;
 }
-function handleChange(item = {}) {
+function handleChange(item) {
 	let val = item?.[props.option.key];
 	if (isArray(item)) {
 		val = item.map((_i) => _i[props.option.key]);
 	}
 	emit("update:modelValue", val);
-	emit("change", val, item);
 	emit("update:data", item);
+	emit("change", item);
 }
 function isArray(obj) {
 	return Object.prototype.toString.call(obj) === "[object Array]";
 }
-</script>
-<script>
-export default {
-	name: "VbScrollSelect"
-};
 </script>
