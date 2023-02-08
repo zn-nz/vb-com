@@ -8,7 +8,7 @@
 	</div>
 </template>
 <script setup>
-import { computed, h, onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps({
 	dataArray: {
@@ -37,9 +37,6 @@ function init() {
 function longListScroll(e) {
 	const { scrollTop } = e.target;
 	firstIndex.value = Math.floor(scrollTop / this.itemHeight);
-}
-function render() {
-	return h("div", ["hhh"]);
 }
 </script>
 
