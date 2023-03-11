@@ -1,7 +1,7 @@
 <template>
 	<scroll-select
 		:loading="loading"
-		:model-value="value"
+		:model-value="currentValue"
 		loading-text="加载中..."
 		no-match-text="未查询到数据"
 		no-data-text="未查询到数据"
@@ -19,13 +19,23 @@
 		@change="handleChange"
 		:value-key="option.key"
 	>
-		<el-option v-for="item in listData" :key="item[option.key]" :label="item[option.label]" :value="item" />
+		<el-option
+			v-for="item in listData"
+			:key="item[option.key]"
+			:label="
+				option.label
+					.split(',')
+					.map((key) => item[key])
+					.join('-')
+			"
+			:value="item"
+		/>
 	</scroll-select>
 </template>
 <!-- eslint-disable no-unused-vars vue/no-setup-props-destructure-->
 <script setup>
 import ScrollSelect from "./index.vue";
-import { computed, onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 
 const props = defineProps({
 	api: Object,
@@ -34,6 +44,7 @@ const props = defineProps({
 		type: String,
 		default: "name"
 	},
+	formatSearchKey: Function, // 格式化搜索参数
 	formatDataFc: Function, // 格式化数据的方法
 	defaultParams: Object, // 默认参数
 	modelValue: [String, Array],
@@ -55,25 +66,39 @@ const props = defineProps({
 			key: "id",
 			label: "name"
 		})
+	},
+	insertList: {
+		// 回显时，避免浪费接口资源，直接插入要回显的数据
+		type: Array,
+		default: () => []
 	}
 });
-const value = computed(() => {
+const currentValue = ref(null);
+function setCurrentValue(v) {
 	if (isArray(props.modelValue)) {
-		return listData.value.filter((item) => props.modelValue.includes(item[props.option.key]));
-	} else {
+		currentValue.value = listData.value.filter((item) => props.modelValue.includes(item[props.option.key]));
+	} else if (props.modelValue) {
 		const find = listData.value.find((item) => {
-			return item[props.option.key] === props.modelValue;
+			return item[props.option.key] === v;
 		});
 		if (!find && props.allowCreate) {
-			return props.modelValue;
+			currentValue.value = props.modelValue;
+		} else {
+			currentValue.value = find;
 		}
-		return find;
+	} else {
+		currentValue.value = null;
 	}
-});
+	if (v !== props.modelValue) {
+		emit("change", currentValue.value);
+	}
+}
 const emit = defineEmits([
 	"update:modelValue", // 只给选中项的value值
 	"change",
-	"update:data" // 给选中项的全部json对象
+	"update:data", // 给选中项的全部json对象
+	"visibleChange",
+	"clear"
 ]);
 const listData = ref([]);
 let cacheListData = [];
@@ -90,6 +115,13 @@ watch(
 		reset();
 	}
 );
+watch(
+	() => props.insertList,
+	() => {
+		initData();
+	}
+);
+watch(() => props.modelValue, setCurrentValue);
 function reset() {
 	listData.value = [];
 	cacheListData = [];
@@ -97,36 +129,42 @@ function reset() {
 	listQuery.value.pageIndex = 1;
 	getListData();
 }
-const { option, api, searchKey, formatDataFc, allowCreate } = props;
+const { option, api, searchKey, formatSearchKey, formatDataFc, allowCreate } = props;
 async function getListData() {
 	if (!props.api) {
 		throw "scroll-select-v2 组件 未定义api";
 	}
 	loading.value = true;
-	const query = {
+	let query = {
 		...props.defaultParams,
 		...listQuery.value,
 		[searchKey]: keyword.value
 	};
+	if (formatSearchKey) {
+		query = { ...query, ...formatSearchKey(keyword.value) };
+	}
 	const { data: res } = await globalRequest(api, query);
 	loading.value = false;
 	const { ok, data } = res ?? {};
 	if (ok) {
-		let temp = data?.filter((i) => listData.value.every((j) => j[option.key] !== i[option.key])) || [];
+		let temp = data?.filter((i) => !listData.value.find((j) => j[option.key] === i[option.key])) || [];
 		formatDataFc && (temp = formatDataFc(temp));
-		noMore = data?.length < listQuery.value.pageSize;
+		noMore = ~~data?.length < listQuery.value.pageSize;
 		if (keyword.value) {
 			listData.value = temp;
 		} else {
 			temp?.length && cacheListData.push(...temp);
 			initData();
-			noMore = data?.length < listQuery.value.pageSize;
+			noMore = ~~data?.length < listQuery.value.pageSize;
 			if (props.modelValue) {
 				if (isArray(props.modelValue)) {
-					const _value = cacheListData.filter((item) => props.modelValue.includes(item[props.option.key]));
+					const _value = listData.value.filter((item) => props.modelValue.includes(item[props.option.key]));
+					if (_value.length < props.modelValue.length) {
+						loadMore();
+					}
 					handleChange(_value);
 				} else {
-					const find = cacheListData.find((item) => item[option.key] === props.modelValue);
+					const find = listData.value.find((item) => item[option.key] === props.modelValue);
 					if (find) {
 						handleChange(find);
 					} else {
@@ -140,9 +178,6 @@ async function getListData() {
 		}
 	} else {
 		noMore = true;
-	}
-	if (!allowCreate && !listData.value.length) {
-		handleChange(undefined);
 	}
 }
 function loadMore() {
@@ -160,29 +195,43 @@ function handleSearch(value) {
 	}
 }
 function visibleChange(show) {
-	if (show && !props.modelValue) {
+	if (!props.modelValue) {
+		if (show) {
+			initData();
+			noMore = false;
+		} else {
+			keyword.value = undefined;
+		}
+	} else if (!show) {
 		initData();
 	}
+	emit("visibleChange", show);
 }
 function handleClear() {
+	emit("clear");
 	keyword.value = undefined;
 	listQuery.value.pageIndex = 1;
 	initData();
+	noMore = false;
 }
 function initData() {
-	listData.value = [...cacheListData];
-	noMore = false;
+	const temp = cacheListData?.filter((i) => !props.insertList.find((j) => j[option.key] === i[option.key])) || [];
+	listData.value = [...props.insertList, ...temp];
 }
 function handleChange(item) {
 	let val = item?.[props.option.key];
 	if (isArray(item)) {
 		val = item.map((_i) => _i[props.option.key]);
 	}
+	currentValue.value = item;
 	emit("update:modelValue", val);
 	emit("update:data", item);
-	emit("change", item);
+	if (val !== props.modelValue) {
+		emit("change", item);
+	}
 }
 function isArray(obj) {
 	return Object.prototype.toString.call(obj) === "[object Array]";
 }
+defineExpose({ reset, initData });
 </script>

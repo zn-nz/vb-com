@@ -1,19 +1,19 @@
 <template>
-	<el-select :model-value="value" :popper-class="popperClass" @visible-change="visibleChange">
+	<el-select ref="selectRef" @visible-change="visibleChange">
 		<slot></slot>
 	</el-select>
 </template>
 <script setup>
+import { ref } from "vue";
 const props = defineProps({
 	loading: Boolean,
-	value: String || Object,
 	diffBottom: {
 		type: Number,
 		default: 20
 	}
 });
 const emit = defineEmits(["loadMore", "visible-change"]);
-const popperClass = `cl-${Date.now()}-${Math.random().toString().replace(".", "")}`;
+const selectRef = ref();
 let dom, scrollTopLast;
 function visibleChange(visible) {
 	emit("visible-change", visible);
@@ -25,8 +25,13 @@ function visibleChange(visible) {
 }
 function initScroll() {
 	setTimeout(() => {
-		dom = document.querySelector(`.${popperClass} .el-scrollbar__wrap`);
-		dom?.scrollTo({ top: 0 });
+		dom = selectRef.value.scrollbar.wrapRef;
+		const selectedDom = dom.querySelector(".selected");
+		let top = 0;
+		if (selectedDom) {
+			top = selectedDom.offsetTop - (dom.offsetHeight - 34);
+		}
+		dom?.scrollTo({ top });
 		scrollTopLast = undefined;
 		dom?.addEventListener("scroll", scrollEvent);
 	}, 0);

@@ -1,28 +1,28 @@
 <template>
-	<div class="list-scroll-search">
-		<el-input :placeholder="placeholder" v-model="keyword" clearable @clear="handleSearch" @keyup.enter="handleSearch">
-			<template #suffix>
-				<el-icon class="pointer" @click="handleSearch">
-					<Search />
-				</el-icon>
-			</template>
-		</el-input>
-		<ul v-if="mounted" v-infinite-scroll="loadMore" class="list">
-			<li v-for="(item, index) in listData" :key="index" :class="{ active: modelValue === item[option.key] }" @click="handleCheck(index)">{{ item[option.label] }}</li>
-		</ul>
-		<el-icon v-if="loading" :class="{ 'is-loading': loading && !noMore }">
-			<Loading />
-		</el-icon>
-		<el-empty v-show="!loading && !listData.length" style="width: 100%" />
-	</div>
+  <div class="list-scroll-search">
+    <el-input :placeholder="placeholder" v-model="keyword" clearable @clear="handleSearch" @keyup.enter="handleSearch">
+      <template #suffix>
+        <el-icon class="pointer" @click="handleSearch">
+          <Search />
+        </el-icon>
+      </template>
+    </el-input>
+    <ul v-if="mounted" v-infinite-scroll="loadMore" class="list">
+      <li v-for="(item, index) in listData" :key="index" :class="{ active: modelValue === item[option.key] }" @click="handleCheck(index)"> {{ item[option.label] }} </li>
+    </ul>
+    <el-icon v-if="loading" :class="{ 'is-loading': loading && !noMore }">
+      <Loading />
+    </el-icon>
+    <el-empty v-show="!loading && !listData.length" style="width: 100%" />
+  </div>
 </template>
 <!-- eslint-disable no-unused-vars vue/no-setup-props-destructure-->
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { Search, Loading } from "@element-plus/icons-vue";
 
 const props = defineProps({
-	api: () => Promise,
+	api: Object,
 	searchKey: String,
 	placeholder: String,
 	formatDataFc: Function,
@@ -52,15 +52,27 @@ onMounted(() => {
 	mounted.value = true;
 	getListData();
 });
-const { option, api, searchKey, formatDataFc, defaultParams } = props;
+watch(
+	() => JSON.stringify(props.defaultParams),
+	() => {
+		reset();
+	}
+);
+function reset() {
+	listData.value = [];
+	keyword.value = undefined;
+	listQuery.value.pageIndex = 1;
+	getListData();
+}
+const { option, api, searchKey, formatDataFc } = props;
 async function getListData() {
 	loading.value = true;
 	const query = {
-		...defaultParams,
+		...props.defaultParams,
 		...listQuery.value,
 		[searchKey]: keyword.value
 	};
-	const { data: res } = await api(query);
+	const { data: res } = await globalRequest(api, query);
 	loading.value = false;
 	const { ok, data } = res ?? {};
 	if (ok && data?.length) {
@@ -106,37 +118,35 @@ function handleCheck(index) {
 	emit("update:label", label);
 	emit("change", value);
 }
-</script>
-<script>
-export default {
-	name: "VbListScrollSearch"
-};
+defineExpose({
+	handleSearch
+});
 </script>
 <style lang="scss" scoped>
 .list-scroll-search {
-	width: 220px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background-color: #fff;
-	padding: 14px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 14px;
 
-	.list {
-		width: 100%;
-		max-height: calc(100% - 42px);
-		min-height: 200px;
-		margin-top: 10px;
-		overflow: auto;
+  .list {
+    width: 100%;
+    max-height: calc(100% - 42px);
+    min-height: 200px;
+    margin-top: 10px;
+    overflow: auto;
 
-		li {
-			cursor: pointer;
-			padding: 10px 20px;
+    li {
+      cursor: pointer;
+      padding: 10px 20px;
 
-			&.active {
-				background-color: var(--el-color-primary);
-				color: #fff;
-			}
-		}
-	}
+      &.active {
+        background-color: var(--el-color-primary);
+        color: #fff;
+      }
+    }
+  }
 }
 </style>
