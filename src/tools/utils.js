@@ -49,9 +49,8 @@ export const sortFuc = (arr, keys, big2Small = false) => {
 	function computeResult(av, bv) {
 		switch (true) {
 			case !!av?.match(REGCHINESENUM)?.length && !!bv?.match(REGCHINESENUM)?.length:
-				return chineseToNumber(av?.match(REGCHINESENUM)[0]) - chineseToNumber(bv?.match(REGCHINESENUM)[0]);
+				return chineseToNumber(av.match(REGCHINESENUM)[0]) - chineseToNumber(bv?.match(REGCHINESENUM)[0]);
 			case isCH(av) && isCH(bv):
-				return -1;
 			case isCH(av) && !isCH(bv):
 				return -1;
 			case !isCH(av) && isCH(bv):
@@ -61,7 +60,7 @@ export const sortFuc = (arr, keys, big2Small = false) => {
 		}
 		let temp = 0;
 		if (av?.length !== bv?.length) {
-			temp += av?.length - bv?.length || 0;
+			temp += av?.length - bv?.length;
 		} else {
 			temp += av?.localeCompare(bv) + ((av - bv) * 2 || 0);
 		}
@@ -70,10 +69,10 @@ export const sortFuc = (arr, keys, big2Small = false) => {
 	return arr.sort((a, b) => {
 		let result = 0;
 		if (keyArr) {
-			keyArr.forEach((key) => {
+			keyArr?.forEach((key) => {
 				try {
-					const av = a[key]?.toString().trim();
-					const bv = b[key]?.toString().trim();
+					const av = a?.[key]?.toString().trim();
+					const bv = b?.[key]?.toString().trim();
 					result += computeResult(av, bv);
 				} catch (e) {
 					console.log(e);
@@ -88,6 +87,16 @@ export const sortFuc = (arr, keys, big2Small = false) => {
 	});
 };
 
+/**
+ * 递归深层排序
+ * @param {array} arr
+ * @param {string} sortKeys
+ * @param {string} childrenKey
+ * @returns
+ */
+export const recursionSort = (arr, sortKeys, childrenKey = "children") => {
+	return sortFuc(arr, sortKeys).map(({ [childrenKey]: children, ...o }) => ({ ...o, children: sortFuc(children, sortKeys) }));
+};
 /**
  * 选择本地文件
  * @param {fileType} accept
