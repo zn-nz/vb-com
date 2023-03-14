@@ -6,6 +6,7 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import path from "path";
 
 export default defineConfig({
+	publicDir: "lib",
 	build: {
 		outDir: "vb-com",
 		// outDir: "vb",

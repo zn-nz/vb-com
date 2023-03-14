@@ -826,10 +826,10 @@ unplugin@^1.0.1:
     webpack-sources "^3.2.3"
     webpack-virtual-modules "^0.5.0"
 
-vb-com@^0.1.13:
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/vb-com/-/vb-com-0.1.13.tgz#50035a73769cfa71372ac37091d39bec9b073737"
-  integrity sha512-OrVxApcWgBv1Ah2Lk7MkqtCo0XHfXdthXOKGrkNMhX+2yHE0pUtJVRff2cmNusnQfhMqwhUQxLMZoPOEAwU7QQ==
+vb-com@^0.1.20:
+  version "0.1.20"
+  resolved "https://registry.yarnpkg.com/vb-com/-/vb-com-0.1.20.tgz#223eb2efa6454335bfce5be622d24ec1876f4cc4"
+  integrity sha512-iEeVVLMJLFJ+qqqDL/VMQQ9A9nH8iaCvzIOUb9OlJpuFVsykoXQBY2V7CqF8d3dS/N2UtbtXNnZrHNmSQ3OWZg==
   dependencies:
     element-plus "^2.2.28"
     vue "^3.2.45"

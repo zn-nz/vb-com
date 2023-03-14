@@ -1,15 +1,15 @@
 <template>
 	<el-config-provider :locale="zhCn">
 		<test />
-		<vb-virtu-list />
 	</el-config-provider>
 </template>
 <script setup>
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
+import { provide } from "vue";
 import logger from "../src/tools/logger.js";
 import Test from "./views/test/index.vue";
-import VbVirtuList from "../lib/components/vb-virtu-list/index.vue";
 
+provide("locale", zhCn);
 function initEES() {
 	const source = new EventSource("/ees");
 	source.onopen = (data) => {

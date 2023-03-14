@@ -1,7 +1,7 @@
 <template>
 	<div class="zn-content">
 		<div class="filter-container">
-			<vb-scroll-select class="filter-item" />
+			<vb-scroll-select class="filter-item" :remove="false" :remote-method="undefined" />
 			<el-button class="filter-item" type="primary">查询</el-button>
 		</div>
 		<div class="handle-container">
@@ -23,7 +23,7 @@
 	</div>
 </template>
 <script setup>
-import { tableMixin } from "vb-com";
+import { tableMixin } from "../../../vb-com/vb-com";
 </script>
 <script>
 export default {
