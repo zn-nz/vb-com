@@ -1,13 +1,13 @@
 <template>
 	<div class="zn-content">
 		<div class="filter-container">
-			<vb-scroll-select class="filter-item" :remove="false" :remote-method="undefined" />
+			<ve-scroll-select class="filter-item" :remove="false" :remote-method="undefined" />
 			<el-button class="filter-item" type="primary">查询</el-button>
 		</div>
 		<div class="handle-container">
 			<el-button class="m-l-auto" type="primary">导出</el-button>
 		</div>
-		<vb-table
+		<ve-table
 			:data="tableData"
 			:total="total"
 			:tableQuery="tableQuery"
@@ -19,7 +19,7 @@
 			@handleBatchDel="(data) => handleDelete(data, handleBatchDel)"
 		>
 			<el-table-column label="操作"></el-table-column>
-		</vb-table>
+		</ve-table>
 	</div>
 </template>
 <script setup>

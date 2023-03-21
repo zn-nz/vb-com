@@ -34,6 +34,7 @@
 </template>
 <!-- eslint-disable no-unused-vars vue/no-setup-props-destructure-->
 <script setup>
+import { ElOption } from "element-plus";
 import ScrollSelect from "./index.vue";
 import { onMounted, ref, watch } from "vue";
 
