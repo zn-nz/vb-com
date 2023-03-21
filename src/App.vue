@@ -4,13 +4,10 @@
 	</el-config-provider>
 </template>
 <script setup>
-import { ElConfigProvider } from "element-plus";
 import zhCn from "element-plus/lib/locale/lang/zh-cn";
-import { provide } from "vue";
 import logger from "../src/tools/logger.js";
 import Test from "./views/test/index.vue";
 
-provide("locale", zhCn);
 function initEES() {
 	const source = new EventSource("/ees");
 	source.onopen = (data) => {
