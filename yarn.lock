@@ -848,10 +848,10 @@ unplugin@^1.0.1, unplugin@^1.1.0:
     webpack-sources "^3.2.3"
     webpack-virtual-modules "^0.5.0"
 
-vb-com@^0.2.22:
-  version "0.2.22"
-  resolved "https://registry.yarnpkg.com/vb-com/-/vb-com-0.2.22.tgz#7372773a0cd8781aefcf49dd0efd4e27d4aa25d1"
-  integrity sha512-AhIBUGXXZqIIyJyw3bteGVJmRbHRGQGGeXiFRVoFd+v/EDz41dFd03OFTlm5ykh6agQXJgPdT6kfLDmrxhp4Gg==
+ve-com@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/ve-com/-/ve-com-0.0.1.tgz#c29c988e0e0183769d5e2edab4ce446e5300b4a0"
+  integrity sha512-MKh6Q70qw5/2JkbCBiPsif3OvDoBNycjE+Xg3bIhmzE7DvRLIAgmBHSgfzVgHtShHBJQDKz06jhmkCCcHENEiA==
   dependencies:
     element-plus "^2.2.28"
     vue "^3.2.45"

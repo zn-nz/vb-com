@@ -1,9 +1,9 @@
 {
-	"name": "vb-com",
-	"version": "0.2.23",
+	"name": "ve-com",
+	"version": "0.0.1",
 	"description": "",
-	"main": "vb-com.umd.cjs",
-  "module": "vb-com.js",
+	"main": "ve-com.umd.cjs",
+  "module": "ve-com.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
