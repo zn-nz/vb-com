@@ -2,6 +2,7 @@
 	<el-input-number v-model="value" class="el-input-number" :controls="false" @blur="handleBlur"></el-input-number>
 </template>
 <script setup>
+import { ElInputNumber } from "element-plus";
 import { computed } from "vue";
 
 const props = defineProps(["modelValue"]);

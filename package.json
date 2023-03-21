@@ -11,13 +11,14 @@
   "dependencies": {
     "element-plus": "^2.2.28",
     "sass": "^1.57.1",
-    "vb-com": "^0.1.20",
+    "vb-com": "^0.2.22",
     "vue": "^3.2.45",
     "zy-plus": "^0.0.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
     "unplugin-auto-import": "^0.12.1",
+    "unplugin-element-plus": "^0.7.0",
     "unplugin-vue-components": "^0.22.12",
     "vite": "^4.0.0"
   }

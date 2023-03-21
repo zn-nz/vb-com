@@ -68,6 +68,7 @@
 	</div>
 </template>
 <script setup>
+import { ElTable, ElTableColumn, ElCheckbox, ElPagination, ElEmpty, ElButton } from "element-plus";
 import { ref, watch } from "vue";
 
 const props = defineProps({

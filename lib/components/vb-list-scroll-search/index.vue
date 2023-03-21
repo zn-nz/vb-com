@@ -18,6 +18,7 @@
 </template>
 <!-- eslint-disable no-unused-vars vue/no-setup-props-destructure-->
 <script setup>
+import { ElInput, ElIcon, ElEmpty } from "element-plus";
 import { onMounted, ref, watch } from "vue";
 import { Search, Loading } from "@element-plus/icons-vue";
 

@@ -23,7 +23,7 @@
 	</div>
 </template>
 <script setup>
-import { tableMixin } from "../../../vb-com/vb-com";
+import { tableMixin } from "vb-com";
 </script>
 <script>
 export default {

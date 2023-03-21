@@ -1,4 +1,5 @@
 import { ElMessage, ElMessageBox } from "element-plus";
+import 'element-plus/es/components/message/style/css'
 import { downloadFile, obj2Formdata, selectLocalFile, typeCheck } from "../tools/utils";
 import { fileType } from "../constant";
 

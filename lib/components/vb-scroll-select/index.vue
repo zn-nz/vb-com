@@ -4,6 +4,7 @@
 	</el-select>
 </template>
 <script setup>
+import { ElSelect } from "element-plus";
 import { ref } from "vue";
 const props = defineProps({
 	loading: Boolean,
