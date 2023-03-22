@@ -1,5 +1,5 @@
 <template>
-	<div v-loading="loading" class="zn-table-content" :style="{ height }">
+	<div v-loading="loading" class="ve-table-content" :style="{ height }">
 		<el-table ref="tableRef" class="flex-1" :class="{ 'hide-checkAll': hideDftCheckAll && !headSelect }" :data="data" @selection-change="handleSelectionChange" v-bind="{ ...$attrs, ...prop }">
 			<el-table-column v-if="showSelect" type="selection" width="55" align="center">
 				<template #header>
@@ -145,7 +145,7 @@ function transferCheckedStatus(store, row) {
 defineExpose({ handleCheckAll });
 </script>
 <style lang="scss">
-.zn-table-content {
+.ve-table-content {
 	height: 100%;
 	display: flex;
 	flex: 1;

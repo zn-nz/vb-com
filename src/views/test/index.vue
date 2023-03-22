@@ -1,5 +1,5 @@
 <template>
-	<div class="zn-content">
+	<div class="ve-content">
 		<div class="filter-container">
 			<ve-scroll-select class="filter-item" :remove="false" :remote-method="undefined" />
 			<el-button class="filter-item" type="primary">查询</el-button>
