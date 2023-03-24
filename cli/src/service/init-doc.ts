@@ -8,10 +8,10 @@ import consola from "consola";
  * 创建组件文档、demo及更新菜单
  */
 export const initDoc = (componentInfo: ComponentInfo) => {
+  const { lineName, lineNameWithPrefix, upCamelName, zhName, packagesPath } =
+    componentInfo;
   // 组件库文档根路径
-  const docRootPath = path.resolve(componentInfo.parentPath, "../docs");
-  const { lineName, lineNameWithPrefix, upCamelName, zhName } = componentInfo;
-
+  const docRootPath = path.resolve(packagesPath, "../docs");
   // 1. 创建组件的 MD 文档
   fs.writeFileSync(
     path.resolve(docRootPath, `components/${lineName}.md`),
@@ -28,10 +28,10 @@ export const initDoc = (componentInfo: ComponentInfo) => {
   // 3. 更新组件库文档菜单
   const menuPath = path.resolve(docRootPath, "components.ts");
   const content = fs.readFileSync(menuPath).toString();
-  const index = content.indexOf("] // end");
+  const index = content.indexOf("]");
   const result =
-    content.substring(0, index - 1) +
-    `,\n  { text: '${upCamelName} ${zhName}', link: '/components/${lineName}' }\n` +
+    content.substring(0, index) +
+    `{ text: "${upCamelName} ${zhName}", link: "/components/${lineName}" },` +
     content.substring(index);
   fs.writeFileSync(menuPath, result);
 

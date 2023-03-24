@@ -3,7 +3,6 @@ import { ComponentInfo } from "../domain/component-info";
 import { initComponent } from "../service/init-component";
 import { initDoc } from "../service/init-doc";
 import { initScss } from "../service/init-scss";
-import { updateComponentLib } from "../service/update-component-lib";
 import { closeLoading, showLoading } from "../utils/loading-utils";
 import consola from "consola";
 // 交互提示
@@ -44,8 +43,6 @@ const createNewComponent = async (
     await initComponent(componentInfo);
     // 3. 创建样式
     await initScss(componentInfo);
-    // 4. 更新组件库入口
-    await updateComponentLib(componentInfo);
     // 5. 组件库文档
     initDoc(componentInfo);
 

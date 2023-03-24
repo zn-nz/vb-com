@@ -1,12 +1,12 @@
 ---
 layout: home
 ​
-title: YYG-DEMO-UI
+title: ve-com
 editLink: true
 lastUpdated: true
 hero:
-  name: yyg-demo-ui
-  text: YYG Vue3企业级中后台组件库
+  name: ve-com
+  text: Vue3中后台组件库
   tagline: 组件库描述 / SLOGAN
   image:
     src: /logo.png
@@ -17,7 +17,7 @@ hero:
       link: /guide/
     - theme: alt
       text: 组件
-      link: /components/foo
+      link: /components
 features:
   - icon:  
     title: 功能/特点 1

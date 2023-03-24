@@ -1,0 +1,29 @@
+{
+	"name": "ve-com",
+	"version": "0.0.1",
+	"description": "",
+	"main": "ve-com.js",
+	"module": "ve-com.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"style": "style.css",
+	"peerDependencies": {
+		"element-plus": "^2.2.28",
+		"vue": "^3.2.45"
+	},
+	"dependencies": {
+		"element-plus": "^2.2.28",
+		"vue": "^3.2.45"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^4.0.0",
+		"unplugin-auto-import": "^0.12.1",
+		"unplugin-vue-components": "^0.22.12",
+		"sass": "^1.57.1",
+		"vite": "^4.0.0"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
+}

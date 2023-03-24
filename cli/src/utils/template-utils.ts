@@ -75,17 +75,13 @@ export type ${upCamelName}Props = ExtractPropTypes<typeof ${lowCamelName}Props>
  */
 export const indexTemplate = (componentInfo: ComponentInfo): string => {
   const { upCamelName, lineName, upCamelNameWithPrefix, type } = componentInfo;
+  const suffix = type === "tsx" ? lineName : lineName + "." + type;
+  return `import { withInstall } from "@ve-com/utils";
+import ${upCamelName} from "./src/${suffix}"
 
-  return `import ${upCamelName} from './src/${
-    type === "tsx" ? lineName : lineName + "." + type
-  }'
-import { App } from 'vue'
-${upCamelName}.install = (app: App): void => {
-  // 注册组件
-  app.component(${upCamelName}.name, ${upCamelName})
-}
-export const ${upCamelNameWithPrefix} = ${upCamelName}
-export default ${upCamelNameWithPrefix}
+export const ${upCamelNameWithPrefix} = withInstall(${upCamelName})
+export default ${upCamelNameWithPrefix};
+export * from "./src/${lineName}";
 `;
 };
 

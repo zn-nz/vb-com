@@ -30,6 +30,8 @@ export class ComponentInfo {
   prefix: string;
   /** 组件全名 如：@ve-com/xxx */
   nameWithLib: string;
+  /** 组件包路径 */
+  packagesPath: string;
   constructor(
     componentName: string,
     description: string,
@@ -45,6 +47,7 @@ export class ComponentInfo {
     this.zhName = description;
     this.type = componentType === "vue" ? "vue" : "tsx";
     this.parentPath = path.resolve(__dirname, "../../../packages/components");
+    this.packagesPath = path.resolve(__dirname, "../../../packages");
     this.fullPath = path.resolve(this.parentPath, this.lineName);
     this.nameWithLib = `@${Config.COMPONENT_LIB_NAME}/${this.lineName}`;
   }
