@@ -1,24 +1,47 @@
 {
-  "name": "vue-base",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "element-plus": "^2.3.1",
-    "sass": "^1.57.1",
-    "ve-com": "^0.1.0",
-    "vue": "^3.2.45"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^4.0.0",
-    "unplugin-auto-import": "^0.12.1",
-    "unplugin-element-plus": "^0.7.0",
-    "unplugin-vue-components": "^0.22.12",
-    "vite": "^4.0.0"
-  }
+	"name": "vue-base",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"scripts": {
+		"build": "rimraf lib && vue-tsc --noEmit && vite build",
+		"dev:docs": "pnpm run -C docs dev",
+		"build:docs": "pnpm run -C docs build",
+		"preview:docs": "pnpm run -C docs serve",
+		"gc": "pnpm run -C cli gen",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"workspaces": [
+		"packages/*",
+		"cli",
+		"docs"
+	],
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"@vue/shared": "^3.2.47",
+		"consola": "^2.15.3",
+		"vite-plugin-vue-setup-extend": "^0.4.0",
+		"vue": "^3.2.47"
+	},
+	"devDependencies": {
+		"@types/node": "^18.15.5",
+		"@typescript-eslint/eslint-plugin": "5.43.0",
+		"@ve-com/components": "workspace:*",
+		"@ve-com/utils": "workspace:*",
+		"@vitejs/plugin-vue": "^4.1.0",
+		"@vitejs/plugin-vue-jsx": "^3.0.1",
+		"eslint": "^8.0.1",
+		"eslint-config-standard-with-typescript": "^34.0.1",
+		"eslint-plugin-import": "2.25.2",
+		"eslint-plugin-n": "15.0.0",
+		"eslint-plugin-promise": "6.0.0",
+		"eslint-plugin-vue": "^9.9.0",
+		"sass": "^1.59.3",
+		"typescript": "^5.0.2",
+		"vite": "^4.2.1",
+		"vite-plugin-eslint": "^1.8.1",
+		"vue-tsc": "^1.2.0"
+	}
 }
