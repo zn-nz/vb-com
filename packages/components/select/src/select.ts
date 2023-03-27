@@ -1,6 +1,11 @@
-import { ExtractPropTypes } from 'vue'
+import { ExtractPropTypes } from "vue";
 
 export const selectProps = {
-} as const
+  loading: Boolean,
+  diffBottom: {
+    type: Number,
+    default: 20,
+  },
+} as const;
 
-export type SelectProps = ExtractPropTypes<typeof selectProps>
+export type SelectProps = ExtractPropTypes<typeof selectProps>;

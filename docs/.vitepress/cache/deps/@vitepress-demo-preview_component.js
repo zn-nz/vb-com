@@ -1,6 +1,6 @@
 import {
   Transition,
-  computed,
+  computed2 as computed,
   createApp,
   createBaseVNode,
   createBlock,
@@ -9,17 +9,20 @@ import {
   createStaticVNode,
   createVNode,
   defineComponent,
-  normalizeClass,
-  normalizeStyle,
   onMounted,
   openBlock,
   ref,
   renderSlot,
-  toDisplayString,
   unref,
   watch,
   withCtx
-} from "./chunk-N5TED7FU.js";
+} from "./chunk-QS2CD57E.js";
+import {
+  normalizeClass,
+  normalizeStyle,
+  toDisplayString
+} from "./chunk-OL2GE5H6.js";
+import "./chunk-7LVDCRE2.js";
 
 // ../node_modules/.pnpm/@vitepress-demo-preview+component@2.2.0_vitepress@1.0.0-alpha.61/node_modules/@vitepress-demo-preview/component/dist/preview-component.js
 var $ = (t, n) => {

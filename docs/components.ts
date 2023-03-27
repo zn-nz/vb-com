@@ -1,5 +1,6 @@
 export const components = [
   { text: "Scrollbar ", link: "/components/scrollbar" },
   { text: "Table ", link: "/components/table" },
-  { text: "Wangjianhua ", link: "/components/wangjianhua" },
+  { text: "Select ", link: "/components/select" },
+  { text: "SelectV2 ", link: "/components/select-v2" },
 ]; // end

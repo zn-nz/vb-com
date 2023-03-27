@@ -1,16 +1,16 @@
 ---
 layout: home
 ​
-title: ve-com
+title: zy-plus
 editLink: true
 lastUpdated: true
 hero:
-  name: ve-com
+  name: zy-plus
   text: Vue3中后台组件库
   tagline: 组件库描述 / SLOGAN
   image:
     src: /logo.png
-    alt: yyg-admin-ui
+    alt: zy-plus
   actions:
     - theme: brand
       text: 快速开始
