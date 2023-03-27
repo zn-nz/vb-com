@@ -22,7 +22,7 @@ import {
   normalizeStyle,
   toDisplayString
 } from "./chunk-OL2GE5H6.js";
-import "./chunk-7LVDCRE2.js";
+import "./chunk-DFKQJ226.js";
 
 // ../node_modules/.pnpm/@vitepress-demo-preview+component@2.2.0_vitepress@1.0.0-alpha.61/node_modules/@vitepress-demo-preview/component/dist/preview-component.js
 var $ = (t, n) => {

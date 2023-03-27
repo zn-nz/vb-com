@@ -1,6 +1,6 @@
 import {
   __commonJS
-} from "./chunk-7LVDCRE2.js";
+} from "./chunk-DFKQJ226.js";
 
 // ../node_modules/.pnpm/consola@2.15.3/node_modules/consola/dist/consola.browser.js
 var require_consola_browser = __commonJS({

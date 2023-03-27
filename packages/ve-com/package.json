@@ -1,6 +1,6 @@
 {
 	"name": "ve-com",
-	"version": "0.0.1",
+	"version": "0.0.5",
 	"description": "",
 	"main": "ve-com.js",
 	"module": "ve-com.js",
@@ -18,9 +18,9 @@
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^4.0.0",
+		"sass": "^1.57.1",
 		"unplugin-auto-import": "^0.12.1",
 		"unplugin-vue-components": "^0.22.12",
-		"sass": "^1.57.1",
 		"vite": "^4.0.0"
 	},
 	"keywords": [],

@@ -5,6 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"gen": "ts-node ./index.ts create",
+		"package": "ts-node ./index.ts package",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
@@ -20,5 +21,10 @@
 		"ora": "5.4.1",
 		"shelljs": "^0.8.5",
 		"ts-node": "^10.9.1"
+	},
+	"dependencies": {
+		"@pnpm/find-workspace-packages": "^6.0.1",
+		"@pnpm/logger": "^5.0.0",
+		"dotenv": "^16.0.3"
 	}
 }

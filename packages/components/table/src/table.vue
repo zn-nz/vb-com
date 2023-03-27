@@ -134,7 +134,6 @@ import {
 } from 'element-plus'
 import { tableProps } from './table'
 import { Store } from 'element-plus/es/components/table/src/store'
-
 const props = defineProps(tableProps)
 
 const tableRef = ref()

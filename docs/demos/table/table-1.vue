@@ -3,7 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import 've-com/style.css'
+import 'element-plus/es/components/table/style/css'
+import 'element-plus/es/components/empty/style/css'
 </script>
 
 <style scoped lang="scss">
