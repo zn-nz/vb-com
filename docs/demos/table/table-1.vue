@@ -1,10 +1,9 @@
 <template>
-  <ve-table></ve-table>
+  <zy-table></zy-table>
 </template>
 
 <script lang="ts" setup>
-import { VeTable } from '@ve-com/components'
-import 'element-plus/lib/components/table/style/index.js'
+import 've-com/style.css'
 </script>
 
 <style scoped lang="scss">

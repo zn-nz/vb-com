@@ -5,6 +5,8 @@ import { resolve } from "path";
 
 import vueSetupExtend from "vite-plugin-vue-setup-extend";
 import eslintPlugin from "vite-plugin-eslint";
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
 export default defineConfig({
   plugins: [
@@ -12,7 +14,16 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
     }),
-
+    Components({
+      // allow auto load markdown components under `./src/components/`
+      extensions: ["vue", "md"],
+      // allow auto import and register components used in markdown
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: "sass",
+        }),
+      ],
+    }),
     // setup 支持 扩展
     vueSetupExtend(),
     // 增加下面的配置项,这样在运行时就能检查eslint规范
@@ -32,7 +43,7 @@ export default defineConfig({
       external: ["vue", "element-plus"],
       output: {
         globals: {
-        vue: "Vue",
+          vue: "Vue",
         },
       },
     },
