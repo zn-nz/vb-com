@@ -26,7 +26,7 @@ const sidebar: DefaultTheme.Sidebar = {
 
 export default defineConfig({
   title: 'zy-plus',
-  description: 'YYG Vue3企业级中后台组件库',
+  description: '后台组件库',
   lang: 'cn-ZH',
   base: '/',
   lastUpdated: true,
