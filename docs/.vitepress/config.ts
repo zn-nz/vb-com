@@ -4,7 +4,7 @@ import { components } from '../components'
 
 const nav: DefaultTheme.NavItem[] = [
   { text: '指南', link: '/guide/' },
-  { text: '组件', link: '/components/foo' }
+  { text: '组件', link: '/components/scrollbar' }
 ]
 
 const sidebar: DefaultTheme.Sidebar = {
@@ -25,14 +25,14 @@ const sidebar: DefaultTheme.Sidebar = {
 }
 
 export default defineConfig({
-  title: 'yyg-admin-ui',
+  title: 'zy-plus',
   description: 'YYG Vue3企业级中后台组件库',
   lang: 'cn-ZH',
   base: '/',
   lastUpdated: true,
   themeConfig: {
     logo: '/logo.png',
-    siteTitle: 'yyg-admin-ui',
+    siteTitle: 'zy-plus',
     outline: 3,
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' }

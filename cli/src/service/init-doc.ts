@@ -31,7 +31,7 @@ export const initDoc = (componentInfo: ComponentInfo) => {
   const index = content.indexOf("]");
   const result =
     content.substring(0, index) +
-    `{ text: "${upCamelName} ${zhName}", link: "/components/${lineName}" },` +
+    `{ text: "${upCamelName} ${zhName}", link: "/components/${lineName}" },\n` +
     content.substring(index);
   fs.writeFileSync(menuPath, result);
 
