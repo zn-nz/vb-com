@@ -33,7 +33,7 @@
   </ve-select>
 </template>
 
-<script lang="ts" setup name="ZySelectV2">
+<script lang="ts" setup name="VeSelectV2">
 import { VeSelect } from '@ve-com/components'
 import { ElOption } from 'element-plus'
 import { defineProps, onMounted, ref, watch } from 'vue'

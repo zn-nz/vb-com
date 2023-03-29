@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "vitepress dev",
-    "build": "vitepress build docs",
-    "serve": "vitepress serve docs --prot 5000"
+    "build": "vitepress build",
+    "serve": "vitepress serve"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +18,6 @@
     "@vitepress-demo-preview/component": "^2.2.0",
     "@vitepress-demo-preview/plugin": "^1.1.7",
     "element-plus": "^2.3.1",
-    "ve-com": "^0.0.4"
+    "ve-com": "workspace:^0.0.5"
   }
 }

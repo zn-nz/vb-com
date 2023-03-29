@@ -1,41 +1,41 @@
 {
-  "hash": "6e79f830",
-  "browserHash": "a144f8ea",
+  "hash": "17b71a5d",
+  "browserHash": "f2e9632c",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/.pnpm/vue@3.2.47/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "2d75c4a9",
+      "fileHash": "c7b1b471",
       "needsInterop": false
     },
     "@vue/devtools-api": {
       "src": "../../../../node_modules/.pnpm/@vue+devtools-api@6.5.0/node_modules/@vue/devtools-api/lib/esm/index.js",
       "file": "@vue_devtools-api.js",
-      "fileHash": "e30fd89f",
+      "fileHash": "df862210",
       "needsInterop": false
     },
     "@vitepress-demo-preview/component": {
       "src": "../../../../node_modules/.pnpm/@vitepress-demo-preview+component@2.2.0_vitepress@1.0.0-alpha.61/node_modules/@vitepress-demo-preview/component/dist/preview-component.js",
       "file": "@vitepress-demo-preview_component.js",
-      "fileHash": "c9b2e78b",
+      "fileHash": "0efbed66",
       "needsInterop": false
     },
-    "ve-com": {
-      "src": "../../../../node_modules/.pnpm/ve-com@0.0.4_element-plus@2.3.1/node_modules/ve-com/ve-com.js",
-      "file": "ve-com.js",
-      "fileHash": "32f1901a",
+    "element-plus": {
+      "src": "../../../../node_modules/.pnpm/element-plus@2.3.1_vue@3.2.47/node_modules/element-plus/es/index.mjs",
+      "file": "element-plus.js",
+      "fileHash": "aa1e147d",
       "needsInterop": false
     },
     "element-plus/es/components/table/style/css": {
       "src": "../../../../node_modules/.pnpm/element-plus@2.3.1/node_modules/element-plus/es/components/table/style/css.mjs",
       "file": "element-plus_es_components_table_style_css.js",
-      "fileHash": "8ab0192e",
+      "fileHash": "009284a9",
       "needsInterop": false
     },
     "element-plus/es/components/empty/style/css": {
       "src": "../../../../node_modules/.pnpm/element-plus@2.3.1/node_modules/element-plus/es/components/empty/style/css.mjs",
       "file": "element-plus_es_components_empty_style_css.js",
-      "fileHash": "ad1bbd68",
+      "fileHash": "69149e55",
       "needsInterop": false
     }
   },

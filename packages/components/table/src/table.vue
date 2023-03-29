@@ -122,7 +122,7 @@
     </div>
   </div>
 </template>
-<script lang="ts" setup name="ZyTable">
+<script lang="ts" setup name="VeTable">
 import { ref, watch } from 'vue'
 import {
   ElTable,

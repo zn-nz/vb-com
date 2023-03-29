@@ -14,7 +14,7 @@ export const cpPackageJson = async () => {
       (await getWorkspacePackages()).map((pkg) => [pkg.manifest.name!, pkg])
     );
     try {
-      writeVersion(pkgs["ve-com"]);
+      writeVersion(pkgs["ve-com-dev"]);
     } catch (e) {}
   }
 };
@@ -25,6 +25,7 @@ const writeVersion = async (project: Project) => {
   await project.writeProjectManifest({
     ...project.manifest,
     version,
+    name: "ve-com",
     // gitHead,
   } as any);
   copyFileSync(packageJsonPath, newPath);

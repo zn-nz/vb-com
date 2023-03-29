@@ -8,7 +8,7 @@
   </el-select>
 </template>
 
-<script lang="ts" setup name="ZySelect">
+<script lang="ts" setup name="VeSelect">
 import { ref, defineProps } from 'vue'
 import { selectProps } from './select'
 

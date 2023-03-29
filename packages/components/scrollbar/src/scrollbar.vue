@@ -8,7 +8,7 @@
     <slot></slot>
   </ElScrollbar>
 </template>
-<script setup lang="ts" name="ZyScrollbar">
+<script setup lang="ts" name="VeScrollbar">
 import { ElScrollbar } from 'element-plus'
 import { scrollbarProps } from './scrollbar'
 import { throttle } from 'lodash'

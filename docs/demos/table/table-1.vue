@@ -1,5 +1,5 @@
 <template>
-  <zy-table></zy-table>
+  <ve-table></ve-table>
 </template>
 
 <script lang="ts" setup>
