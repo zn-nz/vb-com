@@ -9,9 +9,9 @@ hero:
   name: 组件库名称
   text: 组件库中文名称
   tagline: 组件库描述 / SLOGAN
-  image:
-    src: /logo.png
-    alt: YYG Admin UI
+  # image:
+    # src: /logo.png
+    # alt: YYG Admin UI
   actions:
     - theme: brand
       text: 快速开始

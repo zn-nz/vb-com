@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vitepress dev",
     "build": "vitepress build docs",
-    "serve": "vitepress serve"
+    "serve": "vitepress serve docs --prot 5000"
   },
   "keywords": [],
   "author": "",

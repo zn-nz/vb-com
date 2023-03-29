@@ -9,19 +9,17 @@ import {
   createStaticVNode,
   createVNode,
   defineComponent,
+  normalizeClass,
+  normalizeStyle,
   onMounted,
   openBlock,
   ref,
   renderSlot,
+  toDisplayString,
   unref,
   watch,
   withCtx
-} from "./chunk-QS2CD57E.js";
-import {
-  normalizeClass,
-  normalizeStyle,
-  toDisplayString
-} from "./chunk-OL2GE5H6.js";
+} from "./chunk-Z5H376BI.js";
 import "./chunk-DFKQJ226.js";
 
 // ../node_modules/.pnpm/@vitepress-demo-preview+component@2.2.0_vitepress@1.0.0-alpha.61/node_modules/@vitepress-demo-preview/component/dist/preview-component.js
