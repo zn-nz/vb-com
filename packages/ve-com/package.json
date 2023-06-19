@@ -1,6 +1,6 @@
 {
-	"name": "ve-com",
-	"version": "0.0.6",
+	"name": "ve-com-dev",
+	"version": "0.0.7",
 	"description": "",
 	"main": "ve-com.js",
 	"module": "ve-com.js",
