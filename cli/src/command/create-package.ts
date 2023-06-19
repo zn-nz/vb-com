@@ -14,7 +14,7 @@ export const cpPackageJson = async () => {
       (await getWorkspacePackages()).map((pkg) => [pkg.manifest.name!, pkg])
     );
     try {
-      writeVersion(pkgs["ve-com-dev"]);
+      writeVersion(pkgs["ve-com"]);
     } catch (e) {}
   }
 };

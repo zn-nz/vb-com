@@ -3,8 +3,9 @@ import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
 import { resolve } from "path";
 
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import eslintPlugin from "vite-plugin-eslint";
-import ElementPlus from "unplugin-element-plus/vite";
 
 export default defineConfig({
   plugins: [
@@ -12,7 +13,9 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
     }),
-    ElementPlus({}),
+    Components({
+      resolvers: [ElementPlusResolver({ importStyle: "sass" })],
+    }),
     // 增加下面的配置项,这样在运行时就能检查eslint规范
     eslintPlugin({
       include: ["src/**/*.js", "src/**/*.vue", "src/*.js", "src/*.vue"],
