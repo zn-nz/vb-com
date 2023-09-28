@@ -36,6 +36,11 @@ export const selectV2Props = {
     type: Array,
     default: () => [],
   },
+  insertAppend: {
+    // 直接插入的回显数据放置位置，true:前面，false:后面
+    type: Boolean,
+    default: false,
+  },
 } as const;
 
 export type SelectV2Props = ExtractPropTypes<typeof selectV2Props>;

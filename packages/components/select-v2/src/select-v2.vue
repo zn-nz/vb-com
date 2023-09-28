@@ -11,7 +11,7 @@
     remote
     reserve-keyword
     remote-show-suffix
-    :allowCreate="allowCreate"
+    :allowCreate="allowCreate && !listData?.length"
     @remote-method="handleSearch"
     @loadMore="loadMore"
     @clear="handleClear"
@@ -19,17 +19,19 @@
     @change="handleChange"
     :value-key="props.option.key"
   >
-    <ElOption
-      v-for="item in listData"
-      :key="item[props.option.key]"
-      :label="
+    <slot :options="listData">
+      <ElOption
+        v-for="item in listData"
+        :key="item[props.option.key]"
+        :label="
         props.option.label
           .split(',')
           .map((key:string) => item[key])
           .join('-')
       "
-      :value="item"
-    />
+        :value="item"
+      />
+    </slot>
   </ve-select>
 </template>
 
@@ -40,15 +42,14 @@ import { defineProps, onMounted, ref, watch } from 'vue'
 import { selectV2Props } from './select-v2'
 
 const props = defineProps(selectV2Props)
-
 const currentValue = ref()
 function setCurrentValue (v: any) {
   if (isArray(props.modelValue)) {
-    currentValue.value = listData.value.filter((item: any) =>
+    currentValue.value = cacheListData.filter((item) =>
       props.modelValue?.includes(item[props.option.key])
     )
   } else if (props.modelValue) {
-    const find = listData.value.find((item: any) => {
+    const find = listData.value.find((item:any) => {
       return item[props.option.key] === v
     })
     if (!find && props.allowCreate) {
@@ -65,13 +66,14 @@ function setCurrentValue (v: any) {
 }
 const emit = defineEmits([
   'update:modelValue', // 只给选中项的value值
+  'update:total', // 只给选中项的value值
   'change',
   'update:data', // 给选中项的全部json对象
   'visibleChange',
   'clear'
 ])
-const listData = ref()
-let cacheListData: [] = []
+const listData: any = ref([])
+let cacheListData = [...props.insertList.map(formatLabel)]
 let cacheSearchList: [] = []
 let cacheNoMore = false
 const listQuery = ref({ pageIndex: 1, pageSize: 20 })
@@ -96,71 +98,83 @@ watch(
 watch(() => props.modelValue, setCurrentValue)
 function reset () {
   listData.value = []
-  cacheListData = []
+  cacheListData = [...props.insertList.map(formatLabel)]
   keyword.value = undefined
   listQuery.value.pageIndex = 1
-  getListData()
+  props.init && getListData()
 }
 async function getListData () {
   if (!props.api) {
     // eslint-disable-next-line no-throw-literal
     throw 'scroll-select-v2 组件 未定义api'
-  }
-  loading.value = true
-  let query = {
-    ...props.defaultParams,
-    ...listQuery.value,
-    [props.searchKey]: keyword.value
-  }
-  if (props.formatSearchKey) {
-    query = { ...query, ...props.formatSearchKey(keyword.value) }
-  }
-  const { data: res } = await props.api(query)
-  loading.value = false
-  const { ok, data } = res ?? {}
-  if (ok) {
-    let temp: [] =
-      data?.filter(
-        (i: any) =>
-          !listData.value.find(
-            (j: any) => j[props.option.key] === i[props.option.key]
-          )
-      ) || []
-    props.formatDataFc && (temp = props.formatDataFc(temp))
-    if (keyword.value) {
-      noMore = ~~data?.length < listQuery.value.pageSize
-      cacheSearchList.push(...temp)
-      listData.value = [...cacheSearchList]
-    } else {
-      temp?.length && cacheListData.push(...temp)
-      initData()
-      cacheNoMore = noMore = ~~data?.length < listQuery.value.pageSize
-      if (props.modelValue) {
-        if (isArray(props.modelValue)) {
-          const _value = listData.value.filter((item: any) =>
-            props.modelValue?.includes(item[props.option.key])
-          )
-          if (_value.length < props.modelValue.length) {
-            loadMore()
-          }
-          handleChange(_value)
-        } else {
+  } else {
+    loading.value = true
+    let query = {
+      ...props.defaultParams,
+      ...listQuery.value,
+      [props.searchKey]: keyword.value
+    }
+    if (props.formatSearchKey) {
+      query = { ...query, ...props.formatSearchKey(keyword.value) }
+    }
+    let { ok, data, count } = await props.api(query)
+    loading.value = false
+    if (ok) {
+      emit('update:total', count || data?.length || 0)
+      props.formatDataFc &&
+        data?.length &&
+        (data = props.formatDataFc(data || []))
+      const temp: [] =
+        data?.filter((i: any) => {
           const find = listData.value.find(
-            (item: any) => item[props.option.key] === props.modelValue
+            (j:any) => j[props.option.key] === i[props.option.key]
           )
-          if (find) {
-            handleChange(find)
+          if (!find) {
+            i._label = formatLabel(i)._label
+            if (
+              !cacheListData.find(
+                (j: any) => j[props.option.key] === i[props.option.key]
+              )
+            ) {
+              cacheListData.push(i)
+            }
+          }
+          return !find
+        }) || []
+      if (keyword.value) {
+        noMore = ~~data?.length < listQuery.value.pageSize
+        cacheSearchList.push(...temp)
+        listData.value = [...cacheSearchList]
+      } else {
+        initData()
+        cacheNoMore = noMore = ~~data?.length < listQuery.value.pageSize
+        if (props.modelValue) {
+          if (isArray(props.modelValue)) {
+            const _value = listData.value.filter((item: any) =>
+              props.modelValue?.includes(item[props.option.key])
+            )
+            if (_value.length < props.modelValue.length) {
+              loadMore()
+            }
+            handleChange(_value)
           } else {
-            loadMore()
+            const find = listData.value.find(
+              (item: any) => item[props.option.key] === props.modelValue
+            )
+            if (find) {
+              handleChange(find)
+            } else {
+              loadMore()
+            }
           }
         }
+        if (!props.modelValue && props.defaultFirst) {
+          handleChange(listData.value[0])
+        }
       }
-      if (!props.modelValue && props.defaultFirst) {
-        handleChange(listData.value[0])
-      }
+    } else {
+      noMore = true
     }
-  } else {
-    noMore = true
   }
 }
 function loadMore () {
@@ -191,14 +205,6 @@ function visibleChange (show: boolean) {
   }
   if (!show) {
     keyword.value = undefined
-    cacheListData.push(
-      ...(cacheSearchList?.filter(
-        (i) =>
-          !cacheListData.find(
-            (j) => j[props.option.key] === i[props.option.key]
-          )
-      ) || [])
-    )
     initData()
     noMore = cacheNoMore
   }
@@ -214,12 +220,16 @@ function handleClear () {
 function initData () {
   const temp =
     cacheListData?.filter(
-      (i) =>
+      (i: any) =>
         !props.insertList.find(
           (j: any) => j[props.option.key] === i[props.option.key]
         )
     ) || []
-  listData.value = [...props.insertList, ...temp]
+  if (props?.insertAppend) {
+    listData.value = [...temp, ...props.insertList.map(formatLabel)]
+  } else {
+    listData.value = [...props.insertList.map(formatLabel), ...temp]
+  }
 }
 function handleChange (item: any) {
   let val = item?.[props.option.key]
@@ -236,5 +246,14 @@ function handleChange (item: any) {
 function isArray (obj: any) {
   return Object.prototype.toString.call(obj) === '[object Array]'
 }
-defineExpose({ reset, initData })
+function formatLabel (i: any) {
+  const _label = props.option.label
+    .split(',')
+    .map((key: any) => i[key])
+    .filter((i: any) => i)
+    .join('-')
+  return { ...i, _label }
+}
+
+defineExpose({ reset, initData, setCurrentValue })
 </script>
